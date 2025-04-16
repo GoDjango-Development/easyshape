@@ -16,6 +16,7 @@ for managing network performance in local environments or testing scenarios.
 ### 1. Build
 
 ```bash
+make clean
 make
 ```
 
