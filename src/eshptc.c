@@ -42,8 +42,6 @@
 #define TCFLOW "flowid"
 #define TCFLOWID "1:"
 #define TCU32 "u32"
-#define TCIPWILDCARD '*'
-#define TCANYHOST "0.0.0.0/0"
 
 /* Callback to send output buffer. */
 eshp_aclbk eshp_tcclbk;
@@ -142,10 +140,6 @@ int eshp_settf(const char *dev, char *src, char *dst, int spid, int prio)
 	sprintf(priostr, "%d", prio);
 	char spidstr[INT32DIG + 1];
 	sprintf(spidstr, "%s%d", TCFLOWID, spid);
-	if (*src == TCIPWILDCARD)
-		strcpy(src, TCANYHOST);
-	if (*dst == TCIPWILDCARD)
-		strcpy(dst, TCANYHOST);
 	const char *settf[] = {
 		TCBIN, TCFILTER, TCADD, TCDEV, dev, TCPROTOCOL, TCIP,
 		TCPARENT, TCPARENTID, TCPRIO, priostr, TCU32, TCMATCH, TCIP, TCDST, dst,
