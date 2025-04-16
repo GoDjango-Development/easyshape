@@ -24,7 +24,7 @@ This will compile the tool into the `release/` folder.
 ### 2. Run
 
 ```bash
-release/eshop conf/example.conf
+release/eshp conf/example.conf
 ```
 
 This runs EasyShape using the example configuration file.
