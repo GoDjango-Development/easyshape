@@ -1,0 +1,4 @@
+debug/obj/*
+debug/eshp
+release/obj/*
+release/eshp
