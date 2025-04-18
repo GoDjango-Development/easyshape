@@ -21,6 +21,7 @@ int eshp_setdev(const char *dev);
 int eshp_setsp(const char *dev, int id, int64_t sp, const char *un, int qm,
 	int prio);
 /* Set traffic for the specified speed class and device. */
-int eshp_settf(const char *dev, char *src, char *dst, int spid, int prio);
+int eshp_settf(const char *dev, char *src, char *dst, int spid, int prio,
+	int iptype);
 
 #endif

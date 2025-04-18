@@ -27,6 +27,8 @@
 #define TFIPSEP ","
 #define COMMTOK '#'
 #define COMMSUB ' '
+#define IPV4 "ipv4"
+#define IPV6 "ipv6"
 
 /* Minify the lodad file to better manipulation. */
 static void shrkstr(char *str);
@@ -342,7 +344,7 @@ static int brktf(char *str, struct eshp_traffic *tf)
 		return -1;
 	}
 	strcpy(tf->src, pt);
-	pt = strtok_r(NULL, SUBITEMSEP, &toksv);
+	pt = strtok_r(NULL, TFIPSEP, &toksv);
 	if (!pt) {
 		free(strcp);
 		return -1;
@@ -360,6 +362,19 @@ static int brktf(char *str, struct eshp_traffic *tf)
 		return -1;
 	}
 	tf->prio = atoi(pt);
+	pt = strtok_r(NULL, SUBITEMSEP, &toksv);
+	if (!pt) {
+		free(strcp);
+		return -1;
+	}
+	if (!strcmp(pt, IPV4))
+		tf->iptype = 4;
+	else if (!strcmp(pt, IPV6))
+		tf->iptype = 6;
+	else {
+		free(strcp);
+		return -1;
+	}
 	free(strcp);
 	return 0;
 }

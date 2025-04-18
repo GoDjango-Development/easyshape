@@ -36,6 +36,7 @@ struct eshp_traffic {
 	char dst[IPLEN];
 	int spid;
 	int prio;
+	int iptype;
 	struct eshp_traffic *ntf;
 };
 

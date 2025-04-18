@@ -42,6 +42,10 @@
 #define TCFLOW "flowid"
 #define TCFLOWID "1:"
 #define TCU32 "u32"
+#define TCPROTO6 "ipv6"
+#define TCIP6 "ip6"
+#define IPTYPE4 4
+#define IPTYPE6 6
 
 /* Callback to send output buffer. */
 eshp_aclbk eshp_tcclbk;
@@ -134,16 +138,28 @@ static int exectc(const char **prms)
 	return 0;
 }
 
-int eshp_settf(const char *dev, char *src, char *dst, int spid, int prio)
+int eshp_settf(const char *dev, char *src, char *dst, int spid, int prio,
+	int iptype)
 {
 	char priostr[INT32DIG + 1];
 	sprintf(priostr, "%d", prio);
 	char spidstr[INT32DIG + 1];
 	sprintf(spidstr, "%s%d", TCFLOWID, spid);
+	const char *ipvstr;
+	const char *ipproto;
+	if (iptype == IPTYPE4) {
+		ipvstr = TCIP;
+		ipproto = TCIP;
+	}
+	else if (iptype == IPTYPE6) {
+		ipvstr = TCIP6;
+		ipproto = TCPROTO6;
+	} else
+		return EESHPSETTF;
 	const char *settf[] = {
-		TCBIN, TCFILTER, TCADD, TCDEV, dev, TCPROTOCOL, TCIP,
-		TCPARENT, TCPARENTID, TCPRIO, priostr, TCU32, TCMATCH, TCIP, TCDST, dst,
-		TCMATCH, TCIP, TCSRC, src, TCFLOW, spidstr, NULL
+		TCBIN, TCFILTER, TCADD, TCDEV, dev, TCPROTOCOL, ipproto,
+		TCPARENT, TCPARENTID, TCPRIO, priostr, TCU32, TCMATCH, ipvstr, TCDST,
+		dst, TCMATCH, ipvstr, TCSRC, src, TCFLOW, spidstr, NULL
 	};
 	int rc = exectc(settf);
 	if (rc == -2)

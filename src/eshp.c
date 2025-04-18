@@ -158,7 +158,8 @@ static int settf_loop(struct eshp_dev *devs, struct eshp_speed *sps,
 		devnam = devfid(devs, sp->pid);
 		if (!devnam)
 			return EESHPSETTF;
-		rc = eshp_settf(devnam, tfs->src, tfs->dst, tfs->spid, tfs->prio);
+		rc = eshp_settf(devnam, tfs->src, tfs->dst, tfs->spid, tfs->prio,
+			tfs->iptype);
 		if (rc)
 			return rc;
 		tfs = tfs->ntf;
