@@ -38,7 +38,7 @@ ifneq ("$(wildcard $(release_bin))","")
 	$(release_bin) $(conf_file)
 else
 	$(release_command)
-	$(release_bin)
+	$(release_bin) $(conf_file)
 endif
 
 .PHONY: rebuild
